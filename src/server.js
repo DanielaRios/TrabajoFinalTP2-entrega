@@ -3,6 +3,7 @@ import morgan from "morgan";
 import EmpleadoRouter from "./router/empleado.router.js";
 import apiExternaRouter from "./router/api.externa.router.js";
 import jwtRouter from './router/admin.router.js';
+import empleadoAdminRouter from "./router/empleado.admin.router.js";
 
 //inicializamos express
 const server = express();
@@ -20,6 +21,8 @@ server.use("/api/empleado", EmpleadoRouter);
 
 // middleraware para login
 server.use(jwtRouter)
+// middleware de routing solo admin
+server.use(empleadoAdminRouter);
 
 //catch-all for error 404
 server.use((req, res, next) => {
