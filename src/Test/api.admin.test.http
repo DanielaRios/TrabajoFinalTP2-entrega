@@ -1,0 +1,11 @@
+@Host=http://127.0.0.1
+@Port=3001
+
+### LOGIN PARA OBTENER EL JWT
+POST {{Host}}:{{Port}}/user/login
+Content-Type: application/json
+
+{
+    "username": "Admin",
+    "password": "Admin123"
+}
