@@ -1,0 +1,5 @@
+@Host=http://127.0.0.1
+@Port=3001
+
+### Usuarios - solo admin (más adelante con JWT)
+GET {{Host}}:{{Port}}/api/usuario/all

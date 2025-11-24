@@ -13,7 +13,7 @@ GET  {{Host}}:{{Port}}/{{EndpointTempalte}}/select/27
 
 
 ###  Validacion de borrado
-DELETE  {{Host}}:{{Port}}/{{EndpointTempalte}}/delete/20
+DELETE  {{Host}}:{{Port}}/{{EndpointTempalte}}/delete/28
 
 
 ###  Creacion de empleado
@@ -21,16 +21,16 @@ POST  {{Host}}:{{Port}}/{{EndpointTempalte}}/create
 Content-Type: application/json
 
 {
-  "nombre": "fran",
-  "apellido": "pellegrini",
-  "dni": null,
-  "telefono": "1133445566",
+  "nombre": "Prueba",
+  "apellido": "prueba",
+  "dni": 1122333,
+  "telefono": "11223344",
   "email": "dani@example.com",
   "fechaNacimiento": "1990-06-15",
   "fechaIngreso": "2024-03-10",
-  "salarioBase": 2500000,
+  "salarioBase": 3000000,
   "areaId": 2,
-  "puestoId": 3
+  "puestoId": 4
 }
 
 
@@ -40,8 +40,8 @@ PATCH   {{Host}}:{{Port}}/{{EndpointTempalte}}/update
 Content-Type: application/json
 
 {
-  "nombre": "Anna Belen",
-  "apellido": "Acevedo",
-  "id": 27,
-  "email": "annabelenAcevedo@example.com"
+  "nombre": "coco",
+  "apellido": "coco",
+  "id": 29,
+  "email": "coco@example.com"
 }

@@ -12,15 +12,6 @@ dotenv.config();
 export const DATOSAPI_URL =
 	"https://691e2d3bbb52a1db22bd39ef.mockapi.io/api/capacitacionesExternas/CapacitacionesExternas";
 
-//configuracion para JWT ADMIN
-export const CONFIG_ADMIN = {
-    SECRECT_KEY: 'superClaveSecreta',
-
-    DUMMY_USER_ADMIN: {
-        username: 'Admin',
-        password: 'Admin123',
-    }}	
-
 // Base de datos y servidor	
 const {
 	MYSQL_DB,
