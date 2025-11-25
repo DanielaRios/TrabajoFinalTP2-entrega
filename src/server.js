@@ -4,8 +4,7 @@ import EmpleadoRouter from "./router/empleado.router.js";
 import apiExternaRouter from "./router/api.externa.router.js";
 import UsuarioRouter from "./router/usuario.router.js";
 import AuthRouter from "./router/auth.router.js";
-import { authenticateToken } from "./middleware/authentication.js";
-import { authorizeAdmin } from "./middleware/authorizeAdmin.js";
+
 
 //instancio express
 const server = express();
@@ -25,9 +24,8 @@ server.use("/api/capacitaciones-externas",apiExternaRouter);
 //middleware para CRUD de empleados
 server.use("/api/empleado", EmpleadoRouter);
 
-// middleware para usuarios del sistema RRHH
-// endpoint /api/usuario/all protegido solo admin
-server.use("/api/usuario", authenticateToken, authorizeAdmin, UsuarioRouter);
+//middleware para usuarios rrhh
+server.use("/api/usuario", UsuarioRouter);
 
 
 //catch-all for error 404
