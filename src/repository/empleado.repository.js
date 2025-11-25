@@ -21,6 +21,13 @@ export const EmpleadoRepository = {
 		);
 	},
 
+	// Eliminación definitiva (solo admin)
+	destroyOne: async (id) => {
+		return await EmpleadoModel.destroy({
+			where: { id },
+		});
+	},
+
 	// Actualizar datos principales del empleado
 	updateOne: async ({ id, nombre, apellido, email, telefono, salarioBase }) => {
 		return await EmpleadoModel.update(

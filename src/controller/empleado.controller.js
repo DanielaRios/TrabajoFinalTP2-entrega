@@ -70,6 +70,42 @@ export const EmpleadoController = {
 			response.status(400).json({ error: error.message });
 		}
 	},
+	// Eliminación DEFINITIVA (solo admin)
+	deleteHardById: async (request, response) => {
+		const { id } = request.params;
+
+		try {
+			// 1. Verificar si existe el empleado
+			const empleado = await EmpleadoRepository.getOne(id);
+
+			if (!empleado) {
+				return response.status(404).json({
+					code: 404,
+					ok: false,
+					message: `El empleado con ID ${id} no existe`,
+				});
+			}
+
+			// 2. Ejecutar borrado físico
+			await EmpleadoRepository.destroyOne(id);
+
+			return response.status(200).json({
+				code: 200,
+				ok: true,
+				payload: {
+					message: `El empleado ID ${empleado.id} - ${empleado.nombre} ${empleado.apellido} - con DNI ${empleado.dni} fue eliminado permanentemente de la base de datos`,
+				},
+			});
+
+		} catch (error) {
+			console.log("ERROR en deleteHardById:", error.message);
+
+			return response.status(500).json({
+				error: "Error interno del servidor",
+			});
+		}
+	},
+
 
 	createByJson: async (request, response) => {
 		try {

@@ -1,0 +1,90 @@
+@Host=http://127.0.0.1
+@Port=3001
+@contentType = application/json
+@EndpointTemplate = api/empleado
+
+//Categoría para filtrar: Sistemas, Ventas, Marketing, Finanzas, Administración
+@categoria=Sistemas
+
+### Signup RRHH (crear usuario + Supabase + tabla usuarios) 
+POST {{Host}}:{{Port}}/api/auth/signup
+Content-Type: {{contentType}}
+
+{
+  "email": "usuario@example.com",
+  "password": "password123",
+  "nombre": "Usuario",
+  "apellido": "Prueba",
+  "rol": "rrhh"
+}
+
+### Login RRHH (obtener token)
+# @name login
+POST {{Host}}:{{Port}}/api/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "usuario@example.com",
+  "password": "password123"
+}
+
+### Variable token extraída del login
+@token = {{login.response.body.token}}
+
+
+###  1)RRHH: getId empleado por ID
+GET  {{Host}}:{{Port}}/{{EndpointTemplate}}/select/1
+Authorization: Bearer {{token}}
+Accept: application/json
+
+
+###  2) RRHH: delete empleado por ID (eliminacion logica)
+DELETE  {{Host}}:{{Port}}/{{EndpointTemplate}}/delete/23
+Authorization: Bearer {{token}}
+Accept: application/json
+
+###  3) RRHH: alta empleado - creacion de empleado
+POST  {{Host}}:{{Port}}/{{EndpointTemplate}}/create
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Leo",
+  "apellido": "Messi",
+  "dni": "00001111",
+  "telefono": "112",
+  "email": "leo@example.com",
+  "fechaNacimiento": "1990-06-15",
+  "fechaIngreso": "2024-03-10",
+  "salarioBase": "1900000",
+  "genero": "m",
+  "area": "Finanzas",
+  "puesto": "Contador"
+}
+
+
+
+###  4) RRHH: Modificacion de datos del empleado
+PATCH   {{Host}}:{{Port}}/{{EndpointTemplate}}/update
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": 23,
+  "nombre": "editado2",
+  "apellido": " editado",
+  "email": "prueba.editado@example.com",
+  "telefono": "11998877",
+  "salarioBase": 3000000
+}
+
+
+### API EXTERNA - TODAS LAS CAPACITACIONES EXTERNAS
+GET  {{Host}}:{{Port}}/api/capacitaciones-externas
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### API EXTERNA - FILTRAR POR CATEGORIA
+GET  {{Host}}:{{Port}}/api/capacitaciones-externas/{{categoria}}
+Authorization: Bearer {{token}}
+Accept: application/json

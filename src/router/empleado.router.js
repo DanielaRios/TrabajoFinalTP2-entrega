@@ -1,15 +1,24 @@
 import express from "express";
-//import { BookController } from "../controller/book.controller.js";
 import { EmpleadoController } from "../controller/empleado.controller.js";
+
+import { authenticateToken } from "../middleware/authentication.js";
+import { authorizeAdmin } from "../middleware/authorizeAdmin.js";
 
 const EmpleadoRouter = express.Router();
 
 //crud
 
-EmpleadoRouter.get("/all", EmpleadoController.getAllEmpleados)
-	.get("/select/:id", EmpleadoController.getById)
-	.delete("/delete/:id", EmpleadoController.deleteById)
-	.post("/create", EmpleadoController.createByJson)
-	.patch("/update", EmpleadoController.updateByJson);
+EmpleadoRouter
+	
+	//Rutas protegidas para empleados rrhh (requiere estar logueado)
+	.get("/select/:id",authenticateToken, EmpleadoController.getById)
+	.delete("/delete/:id",authenticateToken, EmpleadoController.deleteById)
+	.post("/create",authenticateToken, EmpleadoController.createByJson)
+	.patch("/update", authenticateToken, EmpleadoController.updateByJson)
+
+	//SOLO ADMIN ( requiere estar logueado y rol admin ) get all y delete definitivo
+	.get("/all",authenticateToken,authorizeAdmin, EmpleadoController.getAllEmpleados)
+	.delete("/delete-hard/:id",authenticateToken,authorizeAdmin,EmpleadoController.deleteHardById);
+
 
 export default EmpleadoRouter;
