@@ -22,6 +22,8 @@ const {
 	DIALECT,
 	SERVER_PORT,
 	SERVER_HOST,
+	SUPABASE_URL,      
+	SUPABASE_API_KEY,
 } = process.env;
 
 //exporta los mismos elementos que obtiene
@@ -34,4 +36,6 @@ export const config = {
 	DIALECT,
 	SERVER_PORT,
 	SERVER_HOST,
+	SUPABASE_URL,
+	SUPABASE_API_KEY,
 };
