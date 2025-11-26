@@ -1,17 +1,53 @@
-@Host=http://127.0.0.1
-@Port=3001
+@Host = http://127.0.0.1
+@Port = 3001
+@contentType = application/json
+@EndpointTemplate = api/empleado
 
-@jwt_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzYzODQ1OTg2LCJleHAiOjE3NjM5MzIzODZ9.QSmQzJxqqdRbjrRqdqvlKw2HS-JuPWk4KI-TUN5t-eQ
-### LOGIN PARA OBTENER EL JWT
-POST {{Host}}:{{Port}}/user/login
-Content-Type: application/json
+
+### Login ADMIN (obtener token)
+# @name login
+POST {{Host}}:{{Port}}/api/auth/login
+Content-Type: {{contentType}}
 
 {
-    "username": "Admin",
-    "password": "Admin123"
+  "email": "admin@example.com",
+  "password": "password123"
 }
 
-### Obtener empleados (con token JWT) como administrador
-GET {{Host}}:{{Port}}/api/jwtoken/empleados
-Authorization: Bearer {{jwt_token}}
-Content-Type: application/json
+### Variable token extraída del login
+@token = {{login.response.body.token}}
+
+### Admin: getAll usuarios 
+GET {{Host}}:{{Port}}/api/usuario/all
+Authorization: Bearer {{token}}
+Accept: application/json
+
+###  Admin: getAll empleados
+GET  {{Host}}:{{Port}}/{{EndpointTemplate}}/all
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Admin: deleteHard empleado por ID
+DELETE {{Host}}:{{Port}}/{{EndpointTemplate}}/delete-hard/23
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Admin: Estadistica- Sueldo promedio por area
+GET {{Host}}:{{Port}}/{{EndpointTemplate}}/estadisticas/promedio-sueldo-area
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Admin: Reporte - Cantidad de empleados por área
+GET {{Host}}:{{Port}}/{{EndpointTemplate}}/estadisticas/cantidad-area
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Admin: Reporte - Cantidad de usuarios con rol RRHH
+GET {{Host}}:{{Port}}/api/usuario/estadisticas/cantidad-rrhh
+Authorization: Bearer {{token}}
+Accept: application/json
+
+
+### Prueba 404 - Ruta inexistente
+GET {{Host}}:{{Port}}/ruta
+Accept: application/json

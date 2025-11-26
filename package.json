@@ -29,6 +29,7 @@
 		"linter:format": "npx @biomejs/biome format --write ."
 	},
 	"dependencies": {
+		"@supabase/supabase-js": "^2.84.0",
 		"dotenv": "^17.2.3",
 		"express": "^5.1.0",
 		"jsonwebtoken": "^9.0.2",
