@@ -14,7 +14,14 @@ import UsuarioRouter from "./router/usuario.router.js";
 import AuthRouter from "./router/auth.router.js";
 import WelcomeRouter from "./router/welcome.router.js";
 import notFoundHandler from "./middleware/notFoundHandler.js";
+import { sequelize } from "./databases/mysql.cnx.js";
 
+try {
+    await sequelize.authenticate();
+    console.log("Conexión establecida con la base de datos.");
+} catch (error) {
+    console.log("Error al conectar con la base de datos:", error.message);
+}
 
 //instancio express
 const server = express();
